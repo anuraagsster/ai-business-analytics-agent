@@ -1,0 +1,54 @@
+{
+  "standard": {
+    "title": "Standard Dashboard",
+    "layout": "grid",
+    "options": {
+      "width": "100%",
+      "columns": 2,
+      "padding": 20,
+      "gap": 20,
+      "backgroundColor": "#ffffff"
+    }
+  },
+  "singleColumn": {
+    "title": "Single Column Dashboard",
+    "layout": "flex",
+    "options": {
+      "width": "100%",
+      "padding": 20,
+      "gap": 20,
+      "backgroundColor": "#ffffff"
+    }
+  },
+  "threeColumn": {
+    "title": "Three Column Dashboard",
+    "layout": "grid",
+    "options": {
+      "width": "100%",
+      "columns": 3,
+      "padding": 20,
+      "gap": 15,
+      "backgroundColor": "#ffffff"
+    }
+  },
+  "executive": {
+    "title": "Executive Dashboard",
+    "layout": "grid",
+    "options": {
+      "width": "100%",
+      "columns": 2,
+      "padding": 25,
+      "gap": 25,
+      "backgroundColor": "#f8f9fa"
+    }
+  },
+  "custom": {
+    "title": "Custom Dashboard",
+    "layout": "custom",
+    "options": {
+      "width": "100%",
+      "padding": 20,
+      "backgroundColor": "#ffffff"
+    }
+  }
+}

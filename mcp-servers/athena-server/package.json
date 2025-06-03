@@ -1,0 +1,28 @@
+{
+  "name": "@analytics-agent/athena-server",
+  "version": "1.0.0",
+  "description": "AWS Athena MCP Server for AI Business Analytics Agent",
+  "main": "build/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
+    "dev": "ts-node --esm src/index.ts",
+    "start": "node build/index.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "clean": "rm -rf build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.4.0",
+    "@aws-sdk/client-athena": "^3.400.0",
+    "winston": "^3.10.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0",
+    "jest": "^29.5.0",
+    "@types/jest": "^29.5.0"
+  }
+}

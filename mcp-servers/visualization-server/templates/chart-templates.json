@@ -1,0 +1,48 @@
+{
+  "barChart": {
+    "type": "bar",
+    "options": {
+      "title": "Bar Chart Template",
+      "width": 800,
+      "height": 500,
+      "colors": ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f", "#edc949", "#af7aa1", "#ff9da7"],
+      "scales": {
+        "y": {
+          "beginAtZero": true
+        }
+      }
+    }
+  },
+  "lineChart": {
+    "type": "line",
+    "options": {
+      "title": "Line Chart Template",
+      "width": 800,
+      "height": 500,
+      "colors": ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f", "#edc949"],
+      "legend": true,
+      "animation": false
+    }
+  },
+  "pieChart": {
+    "type": "pie",
+    "options": {
+      "title": "Pie Chart Template",
+      "width": 600,
+      "height": 600,
+      "colors": ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f", "#edc949", "#af7aa1", "#ff9da7"],
+      "legend": true
+    }
+  },
+  "areaChart": {
+    "type": "area",
+    "options": {
+      "title": "Area Chart Template",
+      "width": 800,
+      "height": 500,
+      "colors": ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f", "#edc949"],
+      "legend": true,
+      "animation": false
+    }
+  }
+}

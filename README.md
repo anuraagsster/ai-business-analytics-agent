@@ -79,36 +79,99 @@ This system consists of:
                        └──────────────────┘
 ```
 
+## System Architecture & Code Structure
+
+The AI Business Analytics Agent follows a microservices architecture using Model Context Protocol (MCP) servers, each providing specialized functionality.
+
+### Data Flow & Processing Pipeline
+
+1. **Problem Understanding**: Business problem is received and analyzed
+2. **Problem Decomposition**: Complex problems are broken down into sub-problems
+3. **Data Requirements**: Required data sources and tables are identified
+4. **Query Generation**: SQL queries are dynamically generated
+5. **Query Execution**: Queries are executed via Athena
+6. **Data Analysis**: ML algorithms analyze the data
+7. **Insight Generation**: Key findings are extracted
+8. **Report Creation**: Visual reports with charts and tables are generated
+9. **Delivery**: Reports are converted to PDF and delivered via email
+
+### Database Schema
+
+The PostgreSQL database includes these key tables:
+
+1. **analysis_jobs**: Stores business problems and tracking information
+   - ID, problem description, status, timestamps, user ID, metadata
+
+2. **query_results**: Caches Athena query results
+   - Query hash, query text, results (JSONB), expiration time
+
+3. **analysis_results**: Stores analysis outputs
+   - Analysis type, results, insights, confidence score
+
+4. **reports**: Tracks generated reports
+   - File path, file size, email delivery status
+
+5. **ml_models**: Stores metadata about trained ML models
+   - Model type, version, accuracy, file path
+
 ## MCP Servers
 
 ### 1. Database Server
-- **Purpose**: Data storage, caching, and retrieval
+- **Purpose**: Provides persistent storage and caching capabilities
+- **Technologies**: PostgreSQL for persistent storage and Redis for caching
+- **Key Components**:
+  - `postgres-client.ts`: Handles CRUD operations on PostgreSQL
+  - `redis-client.ts`: Manages cache operations
 - **Tools**: `store_data`, `retrieve_data`, `update_cache`, `delete_data`, `cleanup_expired`, `backup_data`, `get_statistics`
-- **Technologies**: PostgreSQL, Redis
+- **Resources**: Database tables and cache statistics
 
 ### 2. AWS Athena Server
-- **Purpose**: SQL query execution on AWS Athena
-- **Tools**: `execute_query`, `list_databases`, `list_tables`, `describe_table`, `get_query_status`, `get_query_results`
+- **Purpose**: Interfaces with AWS Athena for data querying
+- **Key Components**:
+  - `athena-client.ts`: Wrapper for AWS SDK Athena client
+  - `query-manager.ts`: Manages query execution and results
+- **Tools**: `execute_query`, `list_databases`, `list_tables`, `describe_table`, `get_query_status`, `get_query_results`, `cancel_query`, `estimate_query_cost`
+- **Resources**: Database schemas and query results
 - **Technologies**: AWS SDK, Athena API
 
 ### 3. Email Server
-- **Purpose**: Email delivery and template management
-- **Tools**: `send_email`, `send_bulk_email`, `create_template`, `track_email`, `validate_email`
+- **Purpose**: Handles email delivery for reports
+- **Key Components**:
+  - `template-manager.ts`: Manages email templates
+  - Provider implementations: `sendgrid.ts`, `ses.ts`, `mailgun.ts`
+- **Tools**: `send_email`, `send_bulk_email`, `create_template`, `get_template`, `track_email`, `validate_email`, `schedule_email`
 - **Technologies**: SendGrid, AWS SES, or Mailgun
 
 ### 4. Data Visualization Server
-- **Purpose**: Chart and graph generation
-- **Tools**: `create_chart`, `create_table`, `create_dashboard`, `export_chart`, `create_heatmap`
+- **Purpose**: Creates charts, tables, and dashboards
+- **Key Components**:
+  - Chart generators: `bar-chart.ts`, `line-chart.ts`, `pie-chart.ts`
+  - `table-generator.ts`: For structured data display
+  - `export-manager.ts`: Handles visualization exports
+- **Tools**: `create_chart`, `create_table`, `create_dashboard`, `export_chart`, `create_heatmap`, `create_treemap`, `combine_charts`
 - **Technologies**: Chart.js, D3.js, Canvas
 
 ### 5. PDF Generation Server
-- **Purpose**: PDF report creation and manipulation
-- **Tools**: `html_to_pdf`, `merge_pdfs`, `add_watermark`, `compress_pdf`, `extract_text`
+- **Purpose**: Creates and manipulates PDF documents
+- **Key Components**:
+  - `pdf-generator.ts`: Converts HTML to PDF using Puppeteer
+  - `pdf-merger.ts`: Combines PDFs and adds elements
+  - `pdf-optimizer.ts`: Optimizes PDF size
+  - `pdf-text-extractor.ts`: Extracts text content from PDFs
+- **Tools**: `html_to_pdf`, `merge_pdfs`, `add_watermark`, `compress_pdf`, `extract_text`, `add_page_numbers`, `protect_pdf`
 - **Technologies**: Puppeteer, PDF-lib
 
 ### 6. Machine Learning Server
-- **Purpose**: Pattern recognition, anomaly detection, forecasting
-- **Tools**: `train_model`, `predict`, `analyze_patterns`, `detect_anomalies`, `forecast_timeseries`
+- **Purpose**: Provides ML capabilities for data analysis
+- **Key Components**:
+  - `model-manager.js`: Manages ML model lifecycle
+  - Algorithm implementations:
+    - `anomaly-detection.ts`: Detects outliers in data
+    - `classification.ts`: Classifies data into categories
+    - `clustering.ts`: Groups similar data points
+    - `regression.ts`: Predicts continuous values
+    - `timeseries.ts`: Forecasts time series data
+- **Tools**: `train_model`, `predict`, `analyze_patterns`, `detect_anomalies`, `forecast_timeseries`, `cluster_data`, `classify_data`, `feature_importance`
 - **Technologies**: TensorFlow.js, Python scikit-learn
 
 ## Usage Example
