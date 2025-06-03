@@ -1,0 +1,67 @@
+{
+  "mcpServers": {
+    "database": {
+      "command": "node",
+      "args": ["/Users/anurag/Documents/AI-Business-Analytics-Agent/mcp-servers/database-server/build/index.js"],
+      "env": {
+        "DATABASE_URL": "postgresql://analytics_user:analytics_password@localhost:5432/analytics_db",
+        "REDIS_URL": "redis://localhost:6379",
+        "DB_POOL_SIZE": "10",
+        "CACHE_DEFAULT_TTL": "3600",
+        "BACKUP_SCHEDULE": "0 2 * * *"
+      }
+    },
+    "athena": {
+      "command": "node",
+      "args": ["/Users/anurag/Documents/AI-Business-Analytics-Agent/mcp-servers/athena-server/build/index.js"],
+      "env": {
+        "AWS_ACCESS_KEY_ID": "your_access_key",
+        "AWS_SECRET_ACCESS_KEY": "your_secret_key",
+        "AWS_REGION": "us-east-1",
+        "ATHENA_WORKGROUP": "primary",
+        "ATHENA_OUTPUT_LOCATION": "s3://your-athena-results-bucket/"
+      }
+    },
+    "email": {
+      "command": "node", 
+      "args": ["/Users/anurag/Documents/AI-Business-Analytics-Agent/mcp-servers/email-server/build/index.js"],
+      "env": {
+        "EMAIL_PROVIDER": "sendgrid",
+        "SENDGRID_API_KEY": "your_sendgrid_api_key",
+        "FROM_EMAIL": "analytics@yourcompany.com",
+        "FROM_NAME": "Analytics Agent"
+      }
+    },
+    "visualization": {
+      "command": "node",
+      "args": ["/Users/anurag/Documents/AI-Business-Analytics-Agent/mcp-servers/visualization-server/build/index.js"],
+      "env": {
+        "CHART_OUTPUT_DIR": "./charts",
+        "CHART_CACHE_TTL": "3600",
+        "DEFAULT_CHART_WIDTH": "800",
+        "DEFAULT_CHART_HEIGHT": "600"
+      }
+    },
+    "pdf": {
+      "command": "node",
+      "args": ["/Users/anurag/Documents/AI-Business-Analytics-Agent/mcp-servers/pdf-server/build/index.js"],
+      "env": {
+        "PDF_OUTPUT_DIR": "./pdfs",
+        "PDF_TEMP_DIR": "./temp",
+        "PDF_QUALITY": "high",
+        "DEFAULT_PAGE_FORMAT": "A4"
+      }
+    },
+    "ml": {
+      "command": "node",
+      "args": ["/Users/anurag/Documents/AI-Business-Analytics-Agent/mcp-servers/ml-server/build/index.js"],
+      "env": {
+        "ML_MODEL_DIR": "./models",
+        "ML_TEMP_DIR": "./temp",
+        "PYTHON_EXECUTABLE": "/usr/bin/python3",
+        "ML_CACHE_SIZE": "1000",
+        "DEFAULT_TRAIN_TEST_SPLIT": "0.8"
+      }
+    }
+  }
+}
